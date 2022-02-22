@@ -17,7 +17,6 @@ namespace FirstProject
 
         static void Main(string[] args)
         {
-
             do
             {
                 int money = startMoney;
@@ -27,7 +26,7 @@ namespace FirstProject
                 do
                 {
                     day++;
-                    List<int[]> AllCouponList = new List<int[]>();
+                    List<int[]> allCouponList = new List<int[]>();
                     jackpot = random.Next(1, 38) * 1000000;
 
                     if (money < 1)
@@ -41,13 +40,12 @@ namespace FirstProject
                         #region gameStats
                         Console.WriteLine($"DAY: {day}\n");
                         Console.WriteLine($"Welcome to the National Lottery game!, today's jackpot is {jackpot}!");
-
                         Console.WriteLine($"Your account balance is: {money} $.\n");
 
 
-                        if (AllCouponList.Count > 0)
+                        if (allCouponList.Count > 0)
                         {
-                            showBets(AllCouponList);
+                            ShowBets(allCouponList);
                         }
                         else
                         {
@@ -56,18 +54,16 @@ namespace FirstProject
                         #endregion gameStats
                         #region menu
 
-                        if (money >= 3 && AllCouponList.Count < 8)
+                        if (money >= 3 && allCouponList.Count < 8)
                         {
-                            Console.WriteLine($"\n1 - Place a bet! - -3 $ [{AllCouponList.Count}/8]");
+                            Console.WriteLine($"\n1 - Place a bet! - -3 $ [{allCouponList.Count}/8]");
                         }
 
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("2 - Lottery!");
                         Console.ResetColor();
-
-
-
                         Console.WriteLine("3 - End the game");
+
                         userKey = Console.ReadKey().Key;
 
                         if (userKey == ConsoleKey.D1)
@@ -75,15 +71,15 @@ namespace FirstProject
                             List<int> betNumbers = new List<int>();
                             betNumbers = MakeABet();
                             betNumbers.Sort();
-                            AllCouponList.Add(betNumbers.ToArray());
+                            allCouponList.Add(betNumbers.ToArray());
                             money -= couponPrice;
                         }
                         else if (userKey == ConsoleKey.D2)
                         {
-                            if (AllCouponList.Count > 0)
+                            if (allCouponList.Count > 0)
                             {
                                 int winValue = 0;
-                                winValue = Draw(AllCouponList);
+                                winValue = Draw(allCouponList);
                                 if (winValue == 0)
                                 {
                                     Console.WriteLine("Unfortunately you don't win!");
@@ -143,16 +139,12 @@ namespace FirstProject
 
         }
         #region Drawing lottery
-        private static int Draw(List<int[]> AllCouponList)
+        private static int Draw(List<int[]> allCouponList)
         {
             Console.Clear();
-
             int[] winTable = new int[4];
-
             int sum = 0;
-
             List<int> winningNumbers = new List<int>();
-
 
             for (int i = 0; i < 6; i++)
             {
@@ -161,7 +153,6 @@ namespace FirstProject
                 {
                     i--;
                     continue;
-
                 }
                 else
                 {
@@ -178,7 +169,7 @@ namespace FirstProject
 
             int couponNumber = 0;
             Console.WriteLine("\nYour bets: ");
-            foreach (int[] coupon in AllCouponList)
+            foreach (int[] coupon in allCouponList)
             {
                 couponNumber++;
                 int match = 0;
@@ -220,7 +211,6 @@ namespace FirstProject
 
             if (winTable[0] > 0)
             {
-
                 sum += 24 * winTable[0];
                 Console.WriteLine($"\n3: {winTable[0].ToString()} matches for  + {sum} $.");
             }
@@ -242,9 +232,8 @@ namespace FirstProject
 
             return sum;
         }
-        #endregion lottery
+        #endregion Drawing lottery
 
-        #region Making bet
         private static List<int> MakeABet()
         {
             int index = 0;
@@ -253,8 +242,8 @@ namespace FirstProject
 
             do
             {
-
                 Console.Write("Your numbers: ");
+
                 foreach (var item in userNumbers)
                 {
 
@@ -266,11 +255,7 @@ namespace FirstProject
                 }
 
                 Console.WriteLine("\nEnter a number between 1 and 49");
-
-
                 Console.WriteLine($"{index + 1}/6");
-
-
 
                 int userInput = -1;
                 bool check = int.TryParse(Console.ReadLine(), out userInput);
@@ -283,7 +268,6 @@ namespace FirstProject
                 }
                 else if (userInput > 0 && userInput <= 49 && check == true)
                 {
-
                     userNumbers.Add(userInput);
                     index++;
                 }
@@ -292,19 +276,14 @@ namespace FirstProject
                     Console.WriteLine("You selected wrong value!");
                     Console.ReadKey();
                     Console.WriteLine("Press any key to continue...");
-
                 }
-
-
                 Console.Clear();
 
             } while (index < 6); return userNumbers;
 
         }
-        #endregion bet
 
-        #region Showing bets
-        private static void showBets(List<int[]> AllCouponList)
+        private static void ShowBets(List<int[]> AllCouponList)
         {
 
             int couponNum = 0;
@@ -321,7 +300,7 @@ namespace FirstProject
             }
 
         }
-        #endregion showBets
+
     }
 
 
